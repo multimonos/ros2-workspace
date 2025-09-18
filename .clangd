@@ -1,0 +1,8 @@
+CompileFlags:
+  Add: 
+    - -std=c++17
+    - -I/opt/ros/jazzy/include
+    - -I/opt/ros/jazzy/include/rclcpp
+    - -I/opt/ros/jazzy/include/std_msgs
+  Remove: [-W*, -fcolor-diagnostics]
+  CompilationDatabase: ./build

@@ -1,0 +1,11 @@
+# track src separately
+src/
+
+# keep bags in same place, but, don't track
+bags/*
+!bags/.gitkeep
+
+# ignore
+build/
+log/
+install/
