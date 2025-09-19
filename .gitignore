@@ -5,7 +5,10 @@ src/
 bags/*
 !bags/.gitkeep
 
+# keep bags in same place, but, don't track
+log/*
+!log/.gitkeep
+
 # ignore
 build/
-log/
 install/
