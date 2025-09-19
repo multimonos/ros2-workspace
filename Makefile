@@ -1,39 +1,40 @@
 .PHONY: build
 
-setup:
+ide-setup:
 	ln -s ./build/compile_commands.json # only avail after a build
 
 clean:
 	rm -rf ./install ./build
+	
+notice:
+	@echo "\e[1;31m⚠ Source ~/.bashrc to reload ./install/local_setup.bash\e[0m"
 
+# Build sandbox with symlinks so that re-build 
+# is not required during edit.
+dev: clean
+	colcon build --packages-select sandbox --symlink-install \
+	&& $(MAKE) notice
+
+# Build python + cpp
 build: clean
+	@{ \
 	colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-	&& echo "re-source local-setup required" 
+	&& $(MAKE) notice \
+	; }
 
+# Build one python only
+build-one:
+	colcon build --packages-select sandbox \
+	&& $(MAKE) notice
 
-# Build with symlinks so that re-build is not required
-dev:
-	colcon build --packages-select pypkg --symlink-install \
-	&& echo "re-source local-setup required" 
-
-#
-# python
-#
-py-build:
-	colcon build --packages-select pypkg \
-	&& echo "re-source local-setup required" 
-
-py1:
-	ros2 run pypkg node1
-py2:
-	ros2 run pypkg node2
-pypub:
-	ros2 run pypkg news_pub
-pysub:
-	ros2 run pypkg news_sub
-
-# 
-# C++
-#
-cpp1:
-	ros2 run cpppkg node1
+# Create a python package
+pkg?=
+create-python:
+	@{ \
+	cd src \
+	&& ros2 pkg create $(pkg) \
+		--build-type ament_python \
+		--dependencies rclpy \
+	&& echo "Created src/${pkg}" \
+	&& tree ${pkg} \
+	; }
