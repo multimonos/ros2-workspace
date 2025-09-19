@@ -29,12 +29,11 @@ build-one:
 
 # Create a python package
 pkg?=
+target=src/$(pkg)
 create-python:
-	@{ \
-	cd src \
-	&& ros2 pkg create $(pkg) \
+	ros2 pkg create $(pkg) \
+		--destination-directory ./src \
 		--build-type ament_python \
 		--dependencies rclpy \
-	&& echo "Created src/${pkg}" \
-	&& tree ${pkg} \
-	; }
+	&& rsync -a ./tpl/ $(target)/ \
+	&& tree -a $(target)
