@@ -2,7 +2,9 @@
 compile_commands.json
 
 # track src separately
-src/
+src/*
+src/*/.git
+!src/.gitkeep
 
 # keep bags in same place, but, don't track
 bags/*
