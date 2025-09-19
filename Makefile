@@ -1,11 +1,15 @@
 .PHONY: build
 
+setup:
+	ln -s ./build/compile_commands.json # only avail after a build
+
 clean:
 	rm -rf ./install ./build
 
 build: clean
 	colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
 	&& echo "re-source local-setup required" 
+
 
 # Build with symlinks so that re-build is not required
 dev:

@@ -1,3 +1,6 @@
+# compile_commands.json is a symlink created via `make setup`
+compile_commands.json
+
 # track src separately
 src/
 
